@@ -1,0 +1,15 @@
+{
+	"ImportPath": "github.com/gzsierra/LXC-Upgrade",
+	"GoVersion": "go1.6.2",
+	"Deps": [
+		{
+			"ImportPath": "gopkg.in/cheggaaa/pb.v1",
+			"Comment": "v1.0.5",
+			"Rev": "9453b2db37f4d8bc63751daca63bbe7049eb5e74"
+		},
+		{
+			"ImportPath": "gopkg.in/lxc/go-lxc.v2",
+			"Rev": "f8a6938e600c634232eeef79dc04a1226f73a88b"
+		}
+	]
+}
