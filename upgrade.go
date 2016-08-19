@@ -3,9 +3,8 @@ package main
 import (
         "fmt"
         "sync"
-        "gopkg.in/lxc/go-lxc.v2"
+        "github.com/gzsierra/go-lxc"
         "log"
-        "os/exec"
         "gopkg.in/cheggaaa/pb.v1"
 )
 
@@ -26,31 +25,19 @@ var (
  */
 func upgradeVM(c lxc.Container)  {
   defer wg.Done()
-  cname := c.Name()
 
-  execute(cname, "update")
-  execute(cname, "upgrade")
-  execute(cname, "clean")
-  execute(cname, "autoclean")
+  execute(c, "update")
+  execute(c, "upgrade")
+  execute(c, "clean")
+  execute(c, "autoclean")
 
   cprogress.Increment()
   cdone++
 }
 
-/*
- * Launch command
- */
-func execute(cname string, action string){
-  defer progressBars.Increment()
-
-  cmd := "lxc-attach"
-  cargs := []string{"-n", cname, "--", "apt-get", "-y", action}
-
-  _, err := exec.Command(cmd, cargs...).Output()
-
-  if err != nil {
-    fmt.Println(err.Error())
-  }
+func execute(c lxc.Container, arg string)  {
+    progressBars.Increment()
+    c.Execute("apt-get", "-y", arg)
 }
 
 /*
